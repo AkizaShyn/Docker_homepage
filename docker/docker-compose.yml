@@ -1,0 +1,37 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: ct-homepage
+    hostname: ct-homepage
+    networks:
+      - homepage
+    ports:
+      - 3000:3000
+    volumes:
+      - config:/app/config 
+      - images:/app/public/images
+      - /var/run/docker.sock:/var/run/docker.sock 
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: localhost
+      PUID: 1000
+      PGID: 1000
+    restart: unless-stopped
+
+networks:
+  homepage:
+
+volumes:
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=vm-nfs.topaze.local,rw"
+      device: ":/srv/partagenfs/homepage/config"
+  
+  images:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=vm-nfs.topaze.local,rw"
+      device: ":/srv/partagenfs/homepage/images"
+
