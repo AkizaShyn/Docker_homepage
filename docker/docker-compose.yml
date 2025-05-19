@@ -12,7 +12,7 @@ services:
       - images:/app/public/images
       - /var/run/docker.sock:/var/run/docker.sock 
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: localhost
+      HOMEPAGE_ALLOWED_HOSTS: localhost home.topaze.local
       PUID: 1000
       PGID: 1000
     restart: unless-stopped
